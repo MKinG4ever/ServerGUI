@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta tags for character set, viewport settings, and description -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="v0.1">
+    <title>Monitor</title>
+
+    <!-- Link to external stylesheet -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <!-- Link to external script -->
+    <script src="./script.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+<div class="box">
+
+    <!-- Navigation bar -->
+    <div class="navbar">
+        <!-- Active navigation link -->
+        <a class="active" href="#">Monitor</a>
+        <!-- Separator for navigation links -->
+        <a class="sep"> | </a>
+        <!-- Navigation link to Home -->
+        <a href="index.html">Home</a>
+        <!-- Navigation link aligned to the right -->
+        <a style="float:right" href="#">GUI</a>
+    </div>
+
+    <!-- Main content holder -->
+    <div class="boxHolder">
+
+        <!-- Table structure for monitors -->
+        <div class="monitorTable">
+
+            <!-- First row of monitors -->
+            <div class="monitorRow">
+                <!-- Monitor 01 -->
+                <div class="monitor" id="_01m">Monitor - 01</div>
+                <!-- Monitor 02 -->
+                <div class="monitor" id="_02m">Monitor - 02</div>
+            </div>
+
+            <!-- Second row of monitors -->
+            <div class="monitorRow">
+                <!-- Monitor 03 -->
+                <div class="monitor" id="_03m">Monitor - 03</div>
+                <!-- Monitor 04 -->
+                <div class="monitor" id="_04m">Monitor - 04</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Execute inline scripts -->
+<script>
+    // Change the body background color using the randomColorRGBA function
+    document.body.style.backgroundColor = randomColorRGBA(0.1);
+</script>
+
+</body>
+
+</html>
