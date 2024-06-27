@@ -1,5 +1,7 @@
+from Viewer import Viewer
 import http.server  # Import the HTTP server module
 import socketserver  # Import the socket server module
+from urllib.parse import parse_qs  # Import to parse POST data
 import os  # Import the os module for interacting with the operating system
 
 
@@ -30,7 +32,15 @@ class MyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         :return: A string representing the version.
         """
-        return "v1.0"
+        return "v2.0"
+
+    @staticmethod
+    def present(msg=None, **kwargs):
+        _html = str()
+        _msg = f"<p>{msg}</p>" if msg is not None else ""
+        for key, value in kwargs.items():
+            _html += f"<p>{key.title()}: {value}</p>"
+        return f"{_msg}<div class='present'>{_html}</div>"
 
     def secure(self):
         """
@@ -82,21 +92,53 @@ class MyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
     def handle_reViewer(self):
         """
-        Handle the custom reViewer logic.
+        Handle custom reViewer logic.
         """
-        pass  # Placeholder for custom logic
+        content_length = int(self.headers['Content-Length'])  # Get the length of the POST data
+        post_data = self.rfile.read(content_length).decode('utf-8')  # Read and decode the POST data
+        post_params = parse_qs(post_data)  # Parse the POST data
 
-    def do_GET(self):
-        """
-        Handle a GET request.
-        """
-        super().do_GET()  # Call the parent class's GET handler
+        params = {
+            'url': post_params.get('_ip', [''])[0],  # Store the extracted 'url'
+            'views': post_params.get('_view', [''])[0],  # Store the extracted 'views'
+            'delay': post_params.get('_delay', [''])[0]  # Store the extracted 'delay'
+        }
+
+        # Present params
+        print(*params.items(), sep='\n')  # DeBug Mode
+
+        # Create 'Viewer Object'
+        obj = Viewer(params['url'])
+
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+
+        with open('monitor.html', 'r') as file:
+            page_content = file.read()
+            page_content = page_content.replace('<p>Monitor - 01</p>', self.present(msg='Form Data', **params))
+            page_content = page_content.replace('<p>Monitor - 02</p>', self.present(msg='Viewer', **obj.html_present))
+            self.wfile.write(page_content.encode('utf-8'))
+
+        # Start reViewer
+        obj.view_pages(int(params['views']), int(params['delay']))
 
     def do_POST(self):
         """
         Handle a POST request.
         """
-        pass  # Placeholder for custom POST logic
+        if self.path == '/secure':
+            self.secure()
+        elif self.path == '/monitor.html':
+            self.handle_reViewer()
+        else:
+            self.send_error(404)  # Page not found error
+
+    def do_GET(self):
+        """
+        Handle a GET request.
+        """
+        super().do_GET()
 
 
 class MyHTTPServer:
@@ -122,7 +164,7 @@ class MyHTTPServer:
 
         :return: A string representing the version.
         """
-        return "v1.0"
+        return "v2.0"
 
     def start(self):
         """
