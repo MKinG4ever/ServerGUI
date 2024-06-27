@@ -5,7 +5,7 @@
     <!-- Meta tags for character set, viewport settings, and description -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="v1.0">
+    <meta name="description" content="v2.0">
     <title>Service: reViewer</title>
 
     <!-- Link to external stylesheet -->
@@ -40,14 +40,14 @@
             <h1>reViewer</h1>
 
             <!-- User creation form -->
-            <form action="#" method="get">
+            <form action="monitor.html" method="POST">
                 <!-- URL input field -->
                 <label for="_ip">URL:</label>
                 <input type="text" id="_ip" name="_ip" placeholder="https://www.google.com" title="Target IP" required>
 
                 <!-- Port input field -->
                 <label for="_port">Port:</label>
-                <input type="number" id="_port" name="_port" placeholder="443" title="Target PORT" required>
+                <input type="number" id="_port" name="_port" placeholder="443" title="Target PORT" disabled>
 
                 <!-- Views input field -->
                 <label for="_view">Views:</label>
@@ -55,7 +55,7 @@
 
                 <!-- Delay input field -->
                 <label for="_delay">Delay (halt between views in seconds):</label>
-                <input type="number" id="_delay" name="_time" title="Delay after every view" placeholder="60sec">
+                <input type="number" id="_delay" name="_delay" title="Delay after every view" placeholder="60sec">
 
                 <!-- Proxy input field (disabled) -->
                 <label for="_proxy">Proxy:</label>
